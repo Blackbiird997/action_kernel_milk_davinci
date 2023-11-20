@@ -72,17 +72,6 @@ msg "Kernel Version: $KERNEL_VERSION"
 
 cd $KERNEL_DIR
 
-msg "KernelSU"
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-            echo "CONFIG_KPROBES=y" >> $DEVICE_DEFCONFIG_FILE
-            echo "CONFIG_HAVE_KPROBES=y" >> $DEVICE_DEFCONFIG_FILE
-            echo "CONFIG_KPROBE_EVENTS=y" >> $DEVICE_DEFCONFIG_FILE
-KSU_GIT_VERSION=$(cd KernelSU && git rev-list --count HEAD)
-KERNELSU_VERSION=$(($KSU_GIT_VERSION + 10200))
-msg "KernelSU Version: $KERNELSU_VERSION"
-
-sed -i "/CONFIG_LOCALVERSION=/c\CONFIG_LOCALVERSION=\"-$KERNELSU_VERSION-$KERNEL_NAME\"/" $DEVICE_DEFCONFIG_FILE
-
 #Build
 msg "Build"
 
